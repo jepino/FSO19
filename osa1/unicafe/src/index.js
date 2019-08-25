@@ -9,23 +9,11 @@ const Button = ({ onClick, text }) => {
   );
 };
 
-const Statistics = ({ good, neutral, bad }) => {
-  if (good + neutral + bad === 0) {
-    return (
-      <div>
-        <p>No feedback given</p>
-      </div>
-    );
-  }
+const Statistics = ({ type, value, unit }) => {
   return (
-    <div>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {good + neutral + bad}</p>
-      <p>average {(good - bad) / (good + neutral + bad)}</p>
-      <p>positive {(good / (good + neutral + bad)) * 100} %</p>
-    </div>
+    <p>
+      {type} {value} {unit}
+    </p>
   );
 };
 
@@ -48,7 +36,19 @@ const App = () => {
       </div>
       <div>
         <h1>statistics</h1>
-        <Statistics good={good} neutral={neutral} bad={bad} />
+        <Statistics value={good} type="good" />
+        <Statistics value={neutral} type="neutral" />
+        <Statistics value={bad} type="bad" />
+        <Statistics value={good + neutral + bad} type="all" />
+        <Statistics
+          value={(good - neutral) / (good + neutral + bad)}
+          type="average"
+        />
+        <Statistics
+          value={(good / (good + neutral + bad)) * 100}
+          type="positive"
+          unit="%"
+        />
       </div>
     </div>
   );
