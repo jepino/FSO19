@@ -1,20 +1,44 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
-const Button = ({ onClick, text }) => {
+const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>;
+
+const Statistic = ({ type, value, unit }) => {
   return (
-    <span>
-      <button onClick={onClick}>{text}</button>
-    </span>
+    <tr>
+      <td>{type}</td>
+      <td>
+        {value}
+        {unit}
+      </td>
+    </tr>
   );
 };
 
-const Statistics = ({ type, value, unit }) => {
-  return (
-    <p>
-      {type} {value} {unit}
-    </p>
-  );
+const Statistics = ({ good, neutral, bad }) => {
+  if (good + neutral + bad === 0) {
+    return <p>No feedback given</p>;
+  } else {
+    return (
+      <table>
+        <tbody>
+          <Statistic value={good} type="good" />
+          <Statistic value={neutral} type="neutral" />
+          <Statistic value={bad} type="bad" />
+          <Statistic value={good + neutral + bad} type="all" />
+          <Statistic
+            value={(good - bad) / (good + neutral + bad)}
+            type="average"
+          />
+          <Statistic
+            value={(good / (good + neutral + bad)) * 100}
+            type="positive"
+            unit="%"
+          />
+        </tbody>
+      </table>
+    );
+  }
 };
 
 const App = () => {
@@ -36,19 +60,7 @@ const App = () => {
       </div>
       <div>
         <h1>statistics</h1>
-        <Statistics value={good} type="good" />
-        <Statistics value={neutral} type="neutral" />
-        <Statistics value={bad} type="bad" />
-        <Statistics value={good + neutral + bad} type="all" />
-        <Statistics
-          value={(good - neutral) / (good + neutral + bad)}
-          type="average"
-        />
-        <Statistics
-          value={(good / (good + neutral + bad)) * 100}
-          type="positive"
-          unit="%"
-        />
+        <Statistics good={good} neutral={neutral} bad={bad} />
       </div>
     </div>
   );
