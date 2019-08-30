@@ -1,21 +1,39 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
+const initialPoints = {
+  0: 0,
+  1: 0,
+  2: 0,
+  3: 0,
+  4: 0,
+  5: 0
+};
+
 const Button = ({ onClick, title }) => {
   return <button onClick={onClick}>{title}</button>;
 };
 
 const App = ({ anecdotes }) => {
   const [selected, setSelected] = useState(0);
+  const [points, setPoints] = useState(initialPoints);
 
-  const onClick = () => {
+  const onVote = index => {
+    const copy = { ...points };
+    copy[index] += 1;
+    setPoints(copy);
+  };
+
+  const onNext = () => {
     setSelected(Math.floor(Math.random() * Math.floor(6)));
   };
 
   return (
     <div>
       <h1>{anecdotes[selected]}</h1>
-      <Button onClick={onClick} title="next anecdote" />
+      <p>votes: {points[selected]}</p>
+      <Button onClick={() => onVote(selected)} title="vote" />
+      <Button onClick={onNext} title="next anecdote" />
     </div>
   );
 };
