@@ -1,60 +1,55 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
-const Course = ({ course }) => {
-  return (
-    <div>
-      <Header name={course.name} />
-      <Content parts={course.parts} />
-    </div>
-  );
-};
-
-const Header = ({ name }) => {
-  return (
-    <div>
-      <h1>{name}</h1>
-    </div>
-  );
-};
-
-const Content = ({ parts }) => {
-  return (
-    <div>
-      <Parts parts={parts} />
-    </div>
-  );
-};
-
-const Parts = ({ parts }) =>
-  parts.map(part => (
-    <p>
-      {part.name} {part.exercises}
-    </p>
-  ));
+import Courses from "./components/Courses";
 
 const App = () => {
-  const course = {
-    name: "Half Stack application development",
-    parts: [
-      {
-        name: "Fundamentals of React",
-        exercises: 10
-      },
-      {
-        name: "Using props to pass data",
-        exercises: 7
-      },
-      {
-        name: "State of a component",
-        exercises: 14
-      }
-    ]
-  };
+  const courses = [
+    {
+      name: "Half Stack application development",
+      parts: [
+        {
+          name: "Fundamentals of React",
+          exercises: 10,
+          id: 1
+        },
+        {
+          name: "Using props to pass data",
+          exercises: 7,
+          id: 2
+        },
+        {
+          name: "State of a component",
+          exercises: 14,
+          id: 3
+        },
+        {
+          name: "Redux",
+          exercises: 11,
+          id: 4
+        }
+      ]
+    },
+    {
+      name: "Node.js",
+      parts: [
+        {
+          name: "Routing",
+          exercises: 3,
+          id: 1
+        },
+        {
+          name: "Middlewares",
+          exercises: 7,
+          id: 2
+        }
+      ]
+    }
+  ];
 
   return (
     <div>
-      <Course course={course} />
+      <h1>Web development curriculum</h1>
+      <Courses courses={courses} />
     </div>
   );
 };
