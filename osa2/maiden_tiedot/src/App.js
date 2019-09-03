@@ -26,7 +26,11 @@ const App = () => {
   return (
     <div>
       <Filter value={filter} onChange={handleFilterChange} />
-      <Results results={countries} filter={filter} />
+      <Results
+        results={countries}
+        filter={filter}
+        onClick={handleFilterChange}
+      />
     </div>
   );
 };

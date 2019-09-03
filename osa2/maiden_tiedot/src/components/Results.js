@@ -1,6 +1,6 @@
 import React from "react";
 
-const Results = ({ results, filter }) => {
+const Results = ({ results, filter, onClick }) => {
   const fResults = results.filter(result =>
     result.name.toLowerCase().includes(filter.toLowerCase())
   );
@@ -28,7 +28,12 @@ const Results = ({ results, filter }) => {
     return (
       <div>
         {fResults.map(c => (
-          <div key={c.name}>{c.name}</div>
+          <div key={c.name}>
+            {c.name}{" "}
+            <button value={c.name} onClick={onClick}>
+              show
+            </button>
+          </div>
         ))}
       </div>
     );
