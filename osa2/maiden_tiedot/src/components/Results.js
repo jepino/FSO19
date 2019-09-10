@@ -1,4 +1,5 @@
 import React from "react";
+import Weather from "./Weather";
 
 const Results = ({ results, filter, onClick }) => {
   const fResults = results.filter(result =>
@@ -22,6 +23,7 @@ const Results = ({ results, filter, onClick }) => {
           alt={`flag of ${fResults[0].name}`}
           width="30%"
         />
+        <Weather capital={fResults[0].capital} />
       </div>
     );
   } else if (fResults.length < 10) {
