@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import personService from "./services/persons";
-import Persons from "./components/Persons";
+import Person from "./components/Person";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 
@@ -40,6 +40,14 @@ const App = () => {
     }
   };
 
+  const deletePerson = id => {
+    const person = persons.find(p => p.id === id);
+    if (window.confirm(`Delete ${person.name}?`)) {
+      personService.remove(id);
+      setPersons(persons.filter(p => p !== person));
+    }
+  };
+
   const handleNameChange = event => {
     setNewName(event.target.value);
   };
@@ -51,6 +59,16 @@ const App = () => {
   const handleSearch = event => {
     setFilter(event.target.value);
   };
+
+  const rows = () =>
+    personsToShow.map(person => (
+      <Person
+        key={person.id}
+        person={person}
+        deletePerson={() => deletePerson(person.id)}
+      />
+    ));
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -64,7 +82,7 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h3>Numbers</h3>
-      <Persons persons={personsToShow} />
+      <ul>{rows()}</ul>
     </div>
   );
 };
