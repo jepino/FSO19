@@ -63,7 +63,7 @@ const App = () => {
   const rows = () =>
     personsToShow.map(person => (
       <Person
-        key={person.id}
+        key={person.name}
         person={person}
         deletePerson={() => deletePerson(person.id)}
       />

@@ -9,7 +9,7 @@ const getAll = () => {
 
 const create = newObject => {
   const request = axios.post(baseURL, newObject);
-  return request.then(response => console.log(response.data));
+  return request.then(response => response.data);
 };
 
 const remove = id => {
