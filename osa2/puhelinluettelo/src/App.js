@@ -16,8 +16,12 @@ const App = () => {
   });
 
   useEffect(() => {
+    const fakePerson = {
+      name: "hana vesi",
+      number: "012343329"
+    };
     personService.getAll().then(initialNumbers => {
-      setPersons(initialNumbers);
+      setPersons(initialNumbers.concat(fakePerson));
     });
   }, []);
 
@@ -41,11 +45,28 @@ const App = () => {
         )
       ) {
         const person = persons.find(p => p.name === newName);
-        personService.update(person.id, personObject).then(returnedPerson => {
-          setPersons(
-            persons.map(p => (p.id !== returnedPerson.id ? p : returnedPerson))
-          );
-        });
+        personService
+          .update(person.id, personObject)
+          .then(returnedPerson => {
+            setPersons(
+              persons.map(p =>
+                p.id !== returnedPerson.id ? p : returnedPerson
+              )
+            );
+          })
+          .catch(error => {
+            setPersons(persons.filter(p => p.id !== person.id));
+            setNotification({
+              message: `Information of ${personObject.name} has already been removed from server`,
+              type: "error"
+            });
+            setTimeout(() => {
+              setNotification({
+                message: null,
+                type: null
+              });
+            }, 1000);
+          });
         setNotification({
           message: `${personObject.name} updated`
         });
@@ -79,7 +100,7 @@ const App = () => {
   const deletePerson = id => {
     const person = persons.find(p => p.id === id);
     if (window.confirm(`Delete ${person.name}?`)) {
-      personService.remove(id);
+      personService.remove(id).catch(error => console.log(error));
       setPersons(persons.filter(p => p !== person));
       setNotification({
         message: `${person.name} deleted`
